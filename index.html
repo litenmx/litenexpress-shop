@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liten Express - Cotizador de Envíos Nacionales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-light: #2563eb;
+      --primary-dark: #1e3a8a;
+      --accent: #16a34a;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* NAVEGACIÓN SUPERIOR */
+    header { background: #ffffff; border-bottom: 1px solid var(--border); padding: 14px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .nav-container { max-width: 1050px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo-area { display: flex; align-items: center; gap: 10px; }
+    .logo-badge { background: var(--primary); color: #fff; font-weight: 800; font-size: 18px; padding: 6px 12px; border-radius: 8px; letter-spacing: 0.5px; }
+    .logo-sub { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .btn-login-cajero { font-size: 12px; font-weight: 600; color: var(--text-muted); text-decoration: none; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); transition: all 0.2s; }
+    .btn-login-cajero:hover { background: #f1f5f9; color: var(--primary); border-color: var(--primary-light); }
+
+    /* HERO & CONTENEDOR PRINCIPAL */
+    main { flex: 1; max-width: 1050px; margin: 0 auto; width: 100%; padding: 30px 16px 60px 16px; }
+    .hero-text { text-align: center; margin-bottom: 28px; }
+    .hero-text h1 { font-size: 28px; font-weight: 800; color: var(--primary-dark); margin-bottom: 8px; }
+    .hero-text p { font-size: 15px; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+
+    /* TARJETA DEL COTIZADOR */
+    .card-cotizador { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 28px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
+    .grid-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 22px; }
+    .full { grid-column: span 2; }
+    .seccion-label { font-size: 13px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+
+    label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; }
+    input { width: 100%; padding: 11px 13px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: #fff; transition: border-color 0.2s; }
+    input:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    input.fijo { background-color: #f1f5f9; color: #64748b; cursor: not-allowed; border-style: dashed; }
+
+    .dimensiones-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+    .btn-cotizar { width: 100%; background: var(--primary-light); color: #fff; font-size: 16px; font-weight: 700; border: none; padding: 14px; border-radius: 10px; cursor: pointer; transition: background 0.2s; }
+    .btn-cotizar:hover { background: var(--primary); }
+    .btn-cotizar:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    /* ESTADO DESPERTANDO / CARGANDO */
+    .estado-cargando { display: none; text-align: center; padding: 35px 20px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; margin-top: 24px; }
+    .spinner { width: 36px; height: 36px; border: 4px solid #bfdbfe; border-top-color: var(--primary-light); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 12px auto; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .estado-cargando h3 { color: var(--primary-dark); font-size: 16px; margin-bottom: 4px; }
+    .estado-cargando p { color: #3b82f6; font-size: 13px; }
+
+    /* RESULTADOS DE COTIZACIÓN */
+    #resultadosPublicos { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card-servicio-publico { background: #ffffff; border: 2px solid var(--border); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s; position: relative; overflow: hidden; }
+    .card-servicio-publico:hover { border-color: var(--primary-light); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.04); }
+    .card-servicio-publico.destacado { border-color: var(--primary-light); background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 100%); }
+    .tag-servicio { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 8px; border-radius: 4px; background: #e0e7ff; color: var(--primary-dark); margin-bottom: 12px; }
+    .tag-aereo { background: #fef3c7; color: #92400e; }
+    
+    .servicio-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+    .servicio-img { width: 64px; height: 64px; border-radius: 10px; object-fit: contain; background: #f8fafc; border: 1px solid var(--border); padding: 4px; }
+    .servicio-titulo { font-size: 18px; font-weight: 800; color: #0f172a; }
+    .servicio-tiempo { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+    .precio-publico { font-size: 26px; font-weight: 800; color: var(--accent); margin: 14px 0 6px 0; }
+    .precio-detalle { font-size: 11px; color: var(--text-muted); margin-bottom: 16px; }
+
+    .btn-sucursal { display: block; text-align: center; background: var(--accent); color: white; text-decoration: none; font-weight: 700; font-size: 14px; padding: 11px 16px; border-radius: 8px; transition: background 0.2s; }
+    .btn-sucursal:hover { background: #15803d; }
+    .btn-whatsapp { display: block; text-align: center; background: #25d366; color: white; text-decoration: none; font-weight: 700; font-size: 13px; padding: 9px 14px; border-radius: 8px; margin-top: 8px; }
+    .btn-whatsapp:hover { background: #1eb956; }
+
+    /* INFORMACIÓN DE SUCURSAL / FOOTER */
+    footer { background: #0f172a; color: #f8fafc; padding: 40px 20px 20px 20px; margin-top: auto; }
+    .footer-grid { max-width: 1050px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; border-bottom: 1px solid #334155; padding-bottom: 30px; }
+    .footer-col h3 { font-size: 16px; margin-bottom: 12px; color: #60a5fa; }
+    .footer-col p { font-size: 13px; color: #94a3b8; line-height: 1.6; margin-bottom: 8px; }
+    .footer-bottom { max-width: 1050px; margin: 20px auto 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b; }
+
+    @media (max-width: 768px) {
+      .grid-form { grid-template-columns: 1fr; }
+      .dimensiones-grid { grid-template-columns: 1fr 1fr; }
+      #resultadosPublicos { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <div class="logo-area">
+        <div class="logo-badge">LITEN EXPRESS</div>
+        <div>
+          <div class="logo-sub">Envíos Nacionales</div>
+        </div>
+      </div>
+      <a href="https://liten-express.onrender.com/login" class="btn-login-cajero" target="_blank">🔐 Acceso Empleados / Aliados</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero-text">
+      <h1>Cotiza tu Envío en Segundos</h1>
+      <p>Servicio directo desde nuestra sucursal Veracruz Centro hacia cualquier rincón de la República Mexicana.</p>
+    </div>
+
+    <div class="card-cotizador">
+      <form id="formCotizarPublico">
+        <div class="grid-form">
+          <!-- ORIGEN FIJO (SUCURSAL) -->
+          <div>
+            <div class="seccion-label">📍 Origen (Nuestra Sucursal)</div>
+            <div style="margin-bottom: 10px;">
+              <label>Código Postal Origen</label>
+              <input type="text" id="cpOrigen" value="91700" readonly class="fijo">
+            </div>
+            <div>
+              <label>Colonia / Ubicación</label>
+              <input type="text" id="coloniaOrigen" value="CENTRO (Veracruz, Ver.)" readonly class="fijo">
+            </div>
+          </div>
+
+          <!-- DESTINO DEL CLIENTE -->
+          <div>
+            <div class="seccion-label">🎯 Destino de tu Paquete</div>
+            <div style="margin-bottom: 10px;">
+              <label>Código Postal Destino (5 dígitos)</label>
+              <input type="text" id="cpDestino" required maxlength="5" placeholder="Ej. 22210">
+            </div>
+            <div>
+              <label>Colonia / Población</label>
+              <input type="text" id="coloniaDestino" required placeholder="Ej. Torres del Lago">
+            </div>
+          </div>
+
+          <!-- DIMENSIONES -->
+          <div class="full">
+            <div class="seccion-label">📦 Dimensiones y Peso</div>
+            <div class="dimensiones-grid">
+              <div>
+                <label>Peso (kg)</label>
+                <input type="number" id="peso" required min="1" value="1">
+              </div>
+              <div>
+                <label>Largo (cm)</label>
+                <input type="number" id="largo" required min="1" value="10">
+              </div>
+              <div>
+                <label>Ancho (cm)</label>
+                <input type="number" id="ancho" required min="1" value="10">
+              </div>
+              <div>
+                <label>Alto (cm)</label>
+                <input type="number" id="alto" required min="1" value="10">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" id="btnCotizar" class="btn-cotizar">🔍 Ver Opciones Disponibles</button>
+      </form>
+
+      <!-- SPINNER Y MENSAJE DE ESPERA DE RENDER -->
+      <div id="estadoCargando" class="estado-cargando">
+        <div class="spinner"></div>
+        <h3 id="txtCargandoTitulo">Calculando las mejores tarifas para tu ruta...</h3>
+        <p id="txtCargandoSub">Consultando disponibilidad en tiempo real con nuestra central.</p>
+      </div>
+
+      <!-- CONTENEDOR DE TARIFAS FILTRADAS -->
+      <div id="resultadosPublicos"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>📍 Sucursal y Centro de Atención Liten Express</h3>
+        <p><strong>Comercio Electrónico Liten (RFC: XAXX010101000)</strong></p>
+        <p>Constituyentes 3170 (Entre Francisco Canal y E. Morales), Colonia Centro, Veracruz, Ver. C.P. 91700</p>
+        <p>📱 WhatsApp y Atención al Cliente: <strong>+52 229 667 6770</strong></p>
+      </div>
+      <div class="footer-col">
+        <h3>Horario de Recepción</h3>
+        <p>Lunes a Viernes: 9:00 AM - 7:00 PM</p>
+        <p>Sábados: 9:00 AM - 2:00 PM</p>
+        <p><em>Envíos procesados con estándares de seguridad y embalaje comercial.</em></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Liten Express Paquetería. Todos los derechos reservados.</div>
+      <div>Concesiones de Enlace: DHL: P-POINT20240625HH2 | FEDEX: FD20A558602000 | ESTAFETA: MXES202425AA2566</div>
+    </div>
+  </footer>
+
+  <script>
+    // URL DE TU SERVIDOR EN RENDER
+    const BACKEND_URL = 'https://liten-express.onrender.com';
+
+    document.getElementById('formCotizarPublico').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const btn = document.getElementById('btnCotizar');
+      const boxCargando = document.getElementById('estadoCargando');
+      const boxResultados = document.getElementById('resultadosPublicos');
+      const txtTitulo = document.getElementById('txtCargandoTitulo');
+      const txtSub = document.getElementById('txtCargandoSub');
+
+      btn.disabled = true;
+      boxResultados.innerHTML = '';
+      boxCargando.style.display = 'block';
+
+      // Temporizador para avisar si Render está despertando del modo reposo
+      const avisoRenderTimer = setTimeout(() => {
+        txtTitulo.innerText = "⏳ Conectando con el servidor seguro...";
+        txtSub.innerText = "Nuestros sistemas están arrancando en la nube. Solo tomará unos segundos más.";
+      }, 5000);
+
+      const cpDest = document.getElementById('cpDestino').value.trim();
+      const colDest = document.getElementById('coloniaDestino').value.trim();
+      const pesoVal = parseInt(document.getElementById('peso').value, 10);
+      const largoVal = parseInt(document.getElementById('largo').value, 10);
+      const anchoVal = parseInt(document.getElementById('ancho').value, 10);
+      const altoVal = parseInt(document.getElementById('alto').value, 10);
+
+      const payload = {
+        cpOrigen: "91700",
+        coloniaOrigen: "CENTRO",
+        cpDestino: cpDest,
+        coloniaDestino: colDest,
+        peso: pesoVal,
+        largo: largoVal,
+        ancho: anchoVal,
+        alto: altoVal,
+        envioAsegurado: false,
+        conRecoleccion: false
+      };
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/cotizar-publico`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        clearTimeout(avisoRenderTimer);
+
+        if (!res.ok) {
+          throw new Error('No pudimos calcular la tarifa para este destino. Revisa que el C.P. sea válido o intenta nuevamente.');
+        }
+
+        const data = await res.json();
+        const servicios = data.servicios || [];
+
+        // -------------------------------------------------------------
+        // FILTRO ESTRICTO:
+        // 1. Únicamente paquetería ESTAFETA
+        // 2. Únicamente modalidades SIN RECOLECCION
+        // -------------------------------------------------------------
+        const estafetaSinRecoleccion = servicios.filter(s => {
+          const nombre = (s.nombre || '').toUpperCase();
+          const esEstafeta = nombre.includes('ESTAFETA');
+          const esSinRecoleccion = nombre.includes('SIN RECOLECCION') && !nombre.includes('CON RECOLECCION');
+          return esEstafeta && esSinRecoleccion;
+        });
+
+        if (estafetaSinRecoleccion.length === 0) {
+          boxResultados.innerHTML = `
+            <div style="grid-column: span 2; background: #fff3cd; color: #854d0e; padding: 18px; border-radius: 10px; border: 1px solid #ffeeba; text-align: center;">
+              ⚠️ No se encontraron servicios directos para el código postal <strong>${cpDest}</strong>. Acude a sucursal para cotizar con rutas alternativas.
+            </div>`;
+          return;
+        }
+
+        // 3. Separar Terrestre y Día Siguiente
+        const terrestres = estafetaSinRecoleccion.filter(s => s.nombre.toUpperCase().includes('TERRESTRE'));
+        const diaSiguiente = estafetaSinRecoleccion.filter(s => s.nombre.toUpperCase().includes('DIA SIGUIENTE') || s.nombre.toUpperCase().includes('DÍA SIGUIENTE'));
+
+        // 4. Seleccionar la opción MÁS CARA de cada categoría (con validación de seguridad)
+        let mejorTerrestre = null;
+        if (terrestres.length > 0) {
+          mejorTerrestre = terrestres.reduce((max, act) => (parseFloat(act.total) > parseFloat(max.total) ? act : max));
+        }
+
+        let mejorAereo = null;
+        if (diaSiguiente.length > 0) {
+          mejorAereo = diaSiguiente.reduce((max, act) => (parseFloat(act.total) > parseFloat(max.total) ? act : max));
+        }
+
+        // Cálculo de tarifa mostrador (+ margen estándar Liten)
+        function calcularPrecioMostrador(base) {
+          const costo = parseFloat(base);
+          const servicio = costo * 1.25; 
+          return (costo + servicio).toFixed(2);
+        }
+
+        let htmlTarifas = '';
+
+        // TARJETA 1: LITEN TERRESTRE ESTÁNDAR
+        if (mejorTerrestre) {
+          const totalTerrestre = calcularPrecioMostrador(mejorTerrestre.total);
+          const msgWa = encodeURIComponent(`Hola Liten Express, coticé en su web un envío Terrestre al C.P. ${cpDest} por $${totalTerrestre} MXN. ¿Qué horarios tienen para llevar mi paquete?`);
+          
+          htmlTarifas += `
+            <div class="card-servicio-publico">
+              <div>
+                <span class="tag-servicio">Modalidad Ocurre / Entrega en Sucursal</span>
+                <div class="servicio-header">
+                  <img src="assets/liten-terrestre.png" class="servicio-img" alt="Liten Terrestre" onerror="this.src='https://placehold.co/80x80/2563eb/white?text=Terrestre'">
+                  <div>
+                    <div class="servicio-titulo">LITEN TERRESTRE ESTÁNDAR</div>
+                    <div class="servicio-tiempo">⏱ Entrega estimada: ${mejorTerrestre.dias || '3 a 5'} días hábiles</div>
+                  </div>
+                </div>
+                <div class="precio-publico">$${totalTerrestre} <span style="font-size:14px; font-weight:normal; color:#64748b;">MXN</span></div>
+                <div class="precio-detalle">Tarifa garantizada llevando tu paquete a sucursal Centro.</div>
+              </div>
+              <div>
+                <a href="#footer" class="btn-sucursal">📍 Llevar a Sucursal para Enviar</a>
+                <a href="https://wa.me/522296676770?text=${msgWa}" target="_blank" class="btn-whatsapp">💬 Consultar por WhatsApp</a>
+              </div>
+            </div>
+          `;
+        }
+
+        // TARJETA 2: LITEN EXPRESS AÉREO (DÍA SIGUIENTE)
+        if (mejorAereo) {
+          const totalAereo = calcularPrecioMostrador(mejorAereo.total);
+          const msgWaAereo = encodeURIComponent(`Hola Liten Express, coticé en su web un envío Aéreo Express al C.P. ${cpDest} por $${totalAereo} MXN. Quiero pasar a sucursal a enviarlo.`);
+
+          htmlTarifas += `
+            <div class="card-servicio-publico destacado">
+              <div>
+                <span class="tag-servicio tag-aereo">Prioridad Máxima</span>
+                <div class="servicio-header">
+                  <img src="assets/liten-aereo.png" class="servicio-img" alt="Liten Aéreo" onerror="this.src='https://placehold.co/80x80/d97706/white?text=Aereo'">
+                  <div>
+                    <div class="servicio-titulo">LITEN EXPRESS AÉREO</div>
+                    <div class="servicio-tiempo">⚡ Entrega estimada: 24 a 48 hrs hábiles</div>
+                  </div>
+                </div>
+                <div class="precio-publico">$${totalAereo} <span style="font-size:14px; font-weight:normal; color:#64748b;">MXN</span></div>
+                <div class="precio-detalle">Servicio prioritario nacional llevando tu paquete a sucursal.</div>
+              </div>
+              <div>
+                <a href="#footer" class="btn-sucursal">📍 Llevar a Sucursal para Enviar</a>
+                <a href="https://wa.me/522296676770?text=${msgWaAereo}" target="_blank" class="btn-whatsapp">💬 Consultar por WhatsApp</a>
+              </div>
+            </div>
+          `;
+        }
+
+        boxResultados.innerHTML = htmlTarifas;
+
+      } catch (err) {
+        clearTimeout(avisoRenderTimer);
+        boxResultados.innerHTML = `
+          <div style="grid-column: span 2; background: #fee2e2; color: #991b1b; padding: 18px; border-radius: 10px; border: 1px solid #fecaca; text-align: center;">
+            ${err.message}
+          </div>`;
+      } finally {
+        boxCargando.style.display = 'none';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
