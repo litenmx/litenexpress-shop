@@ -22,13 +22,11 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
     body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* NAVEGACIÓN SUPERIOR */
-    header { background: #ffffff; border-bottom: 1px solid var(--border); padding: 14px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
-    .nav-container { max-width: 1050px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-    .logo-area { display: flex; align-items: center; gap: 10px; }
-    .logo-badge { background: var(--primary); color: #fff; font-weight: 800; font-size: 18px; padding: 6px 12px; border-radius: 8px; letter-spacing: 0.5px; }
-    .logo-sub { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-    .btn-login-cajero { font-size: 12px; font-weight: 600; color: var(--text-muted); text-decoration: none; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); transition: all 0.2s; }
+    /* NAVEGACIÓN SUPERIOR Y BANNERS */
+    header { background: #ffffff; border-bottom: 1px solid var(--border); padding: 10px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .nav-container { max-width: 1050px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+    .banner-header { width: 100%; max-width: 500px; height: auto; object-fit: contain; border-radius: 6px; }
+    .btn-login-cajero { font-size: 12px; font-weight: 600; color: var(--text-muted); text-decoration: none; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); transition: all 0.2s; white-space: nowrap; }
     .btn-login-cajero:hover { background: #f1f5f9; color: var(--primary); border-color: var(--primary-light); }
 
     /* HERO & CONTENEDOR PRINCIPAL */
@@ -70,9 +68,9 @@
     .tag-aereo { background: #fef3c7; color: #92400e; }
     
     .servicio-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
-    .servicio-img { width: 64px; height: 64px; border-radius: 10px; object-fit: contain; background: #f8fafc; border: 1px solid var(--border); padding: 4px; }
-    .servicio-titulo { font-size: 18px; font-weight: 800; color: #0f172a; }
-    .servicio-tiempo { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+    .servicio-img { width: 85px; height: 85px; border-radius: 10px; object-fit: contain; background: #f8fafc; border: 1px solid var(--border); padding: 4px; }
+    .servicio-titulo { font-size: 18px; font-weight: 800; color: #0f172a; line-height: 1.1; }
+    .servicio-tiempo { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
 
     .precio-publico { font-size: 26px; font-weight: 800; color: var(--accent); margin: 14px 0 6px 0; }
     .precio-detalle { font-size: 11px; color: var(--text-muted); margin-bottom: 16px; }
@@ -83,8 +81,9 @@
     .btn-whatsapp:hover { background: #1eb956; }
 
     /* INFORMACIÓN DE SUCURSAL / FOOTER */
-    footer { background: #0f172a; color: #f8fafc; padding: 40px 20px 20px 20px; margin-top: auto; }
-    .footer-grid { max-width: 1050px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; border-bottom: 1px solid #334155; padding-bottom: 30px; }
+    footer { background: #0f172a; color: #f8fafc; padding: 0 20px 20px 20px; margin-top: auto; }
+    .banner-footer { width: 100%; max-width: 1050px; height: auto; display: block; margin: 0 auto; border-radius: 0 0 16px 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+    .footer-grid { max-width: 1050px; margin: 40px auto 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; border-bottom: 1px solid #334155; padding-bottom: 30px; }
     .footer-col h3 { font-size: 16px; margin-bottom: 12px; color: #60a5fa; }
     .footer-col p { font-size: 13px; color: #94a3b8; line-height: 1.6; margin-bottom: 8px; }
     .footer-bottom { max-width: 1050px; margin: 20px auto 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b; }
@@ -95,6 +94,8 @@
       #resultadosPublicos { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+      .nav-container { flex-direction: column; padding: 5px 0; }
+      .banner-header { max-width: 100%; }
     }
   </style>
 </head>
@@ -102,12 +103,9 @@
 
   <header>
     <div class="nav-container">
-      <div class="logo-area">
-        <div class="logo-badge">LITEN EXPRESS</div>
-        <div>
-          <div class="logo-sub">Envíos Nacionales</div>
-        </div>
-      </div>
+      <a href="/" style="text-decoration: none; width: 100%; text-align: center; max-width: 500px;">
+        <img src="ENCABEZADO.jpg" alt="Liten Express Paquetería" class="banner-header">
+      </a>
       <a href="https://liten-express.onrender.com/login" class="btn-login-cajero" target="_blank">🔐 Acceso Empleados / Aliados</a>
     </div>
   </header>
@@ -187,6 +185,7 @@
   </main>
 
   <footer>
+    <img src="PIE DE PAGINA.jpg" alt="Envíos Nacionales e Internacionales Liten Express" class="banner-footer">
     <div class="footer-grid">
       <div class="footer-col">
         <h3>📍 Sucursal y Centro de Atención Liten Express</h3>
@@ -320,7 +319,7 @@
               <div>
                 <span class="tag-servicio">Modalidad Ocurre / Entrega en Sucursal</span>
                 <div class="servicio-header">
-                  <img src="assets/liten-terrestre.png" class="servicio-img" alt="Liten Terrestre" onerror="this.src='https://placehold.co/80x80/2563eb/white?text=Terrestre'">
+                  <img src="ORDINARIO.png" class="servicio-img" alt="Liten Terrestre">
                   <div>
                     <div class="servicio-titulo">LITEN TERRESTRE ESTÁNDAR</div>
                     <div class="servicio-tiempo">⏱ Entrega estimada: ${mejorTerrestre.dias || '3 a 5'} días hábiles</div>
@@ -347,7 +346,7 @@
               <div>
                 <span class="tag-servicio tag-aereo">Prioridad Máxima</span>
                 <div class="servicio-header">
-                  <img src="assets/liten-aereo.png" class="servicio-img" alt="Liten Aéreo" onerror="this.src='https://placehold.co/80x80/d97706/white?text=Aereo'">
+                  <img src="EXPRESS.png" class="servicio-img" alt="Liten Aéreo">
                   <div>
                     <div class="servicio-titulo">LITEN EXPRESS AÉREO</div>
                     <div class="servicio-tiempo">⚡ Entrega estimada: 24 a 48 hrs hábiles</div>
