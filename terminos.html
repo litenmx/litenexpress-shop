@@ -4,67 +4,150 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Términos y Condiciones - Liten Express</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { background-color: #f8fafc; color: #0f172a; font-family: 'Inter', sans-serif; line-height: 1.6; padding: 40px 20px; }
-    .container { max-width: 800px; margin: 0 auto; background: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-    h1 { color: #1e40af; font-size: 24px; text-align: center; border-bottom: 2px solid #2563eb; padding-bottom: 15px; margin-bottom: 20px; }
-    h2 { color: #1e3a8a; font-size: 18px; margin-top: 25px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
-    p, li { font-size: 14px; color: #475569; }
-    .btn-volver { display: inline-block; margin-bottom: 20px; color: #2563eb; text-decoration: none; font-weight: bold; font-size: 14px; background: #eff6ff; padding: 8px 12px; border-radius: 6px; }
-    .btn-volver:hover { background: #dbeafe; }
-    .legal-box { background: #f1f5f9; border-left: 4px solid #1e40af; padding: 15px; margin-bottom: 20px; font-size: 13px; color: #334155; }
+    :root {
+      --primary: #1e40af;
+      --primary-light: #2563eb;
+      --primary-dark: #1e3a8a;
+      --bg: #f0f4f8;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+    
+    header { background: #ffffff; border-bottom: 1px solid var(--border); padding: 12px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .nav-container { max-width: 1050px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+    .banner-header { width: 100%; max-width: 450px; height: auto; object-fit: contain; }
+    .btn-login-cajero { font-size: 13px; font-weight: 600; color: var(--text-muted); text-decoration: none; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); transition: all 0.2s; white-space: nowrap; background: #f8fafc; }
+    .btn-login-cajero:hover { background: #e2e8f0; color: var(--primary-dark); border-color: #94a3b8; }
+
+    main { flex: 1; max-width: 950px; margin: 40px auto; width: 100%; padding: 0 16px 60px 16px; }
+    .container-legal { background: #ffffff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+    
+    h1 { color: var(--primary-dark); font-size: 28px; text-align: center; border-bottom: 3px solid var(--primary-light); padding-bottom: 15px; margin-bottom: 25px; letter-spacing: -0.5px; }
+    h2 { color: var(--primary); font-size: 18px; margin-top: 30px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 12px; }
+    p, li { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 15px; }
+    ul { margin-bottom: 20px; padding-left: 20px; }
+    
+    .legal-box { background: #f8fafc; border-left: 5px solid var(--primary); padding: 20px; margin-bottom: 25px; font-size: 14px; color: #334155; border-radius: 0 8px 8px 0; border: 1px solid #e2e8f0; border-left-width: 5px; }
+
+    /* FOOTER */
+    footer { background: #0f172a; color: #f8fafc; padding: 0 20px 30px 20px; margin-top: auto; }
+    .banner-footer { width: 100%; max-width: 1050px; height: auto; display: block; margin: 0 auto; border-radius: 0 0 16px 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+    .footer-grid { max-width: 1050px; margin: 40px auto 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 40px; border-bottom: 1px solid #334155; padding-bottom: 30px; }
+    .footer-col h3 { font-size: 16px; margin-bottom: 15px; color: #60a5fa; text-transform: uppercase; letter-spacing: 0.5px; }
+    .footer-col p { font-size: 13px; color: #94a3b8; line-height: 1.6; margin-bottom: 8px; }
+    .footer-bottom { max-width: 1050px; margin: 25px auto 0 auto; display: flex; justify-content: space-between; align-items: start; font-size: 12px; color: #64748b; }
+    .legal-links a { color: #94a3b8; text-decoration: none; margin-right: 15px; font-weight: 600; transition: color 0.2s; }
+    .legal-links a:hover { color: #f8fafc; text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 25px; }
+      .footer-bottom { flex-direction: column; gap: 15px; text-align: left; }
+      .nav-container { flex-direction: column; padding: 8px 0; }
+      .banner-header { max-width: 100%; }
+      .container-legal { padding: 25px; }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <a href="/" class="btn-volver">← Volver al Portal Principal</a>
-    <h1>Acuerdo de Servicio y Términos Comerciales</h1>
-    
-    <div class="legal-box">
-      <strong>IDENTIFICACIÓN Y REGISTRO LEGAL DEL NEGOCIO</strong><br>
-      Este sitio web y los servicios ofrecidos están respaldados por un establecimiento físico legalmente constituido y autorizado por el H. Ayuntamiento de Veracruz (2026-2029).<br>
-      <strong>Titular / Representante Legal:</strong> Jorge Luis Tome Benitez<br>
-      <strong>Nombre Comercial:</strong> Liten Express Paquetería<br>
-      <strong>RFC:</strong> TOBJ860525260<br>
-      <strong>Giro Comercial Autorizado:</strong> Servicios de mensajería y paquetería foránea y local.<br>
-      <strong>Licencia Municipal Folio:</strong> 652-10-26 | <strong>Cédula de Empadronamiento Folio:</strong> 255-10-26<br>
-      <strong>Domicilio Operativo:</strong> Av. Constituyentes 3170, Zona Centro, C.P. 91700 (Entre F. Canal y E. Morales), Veracruz, Ver.<br>
-      <strong>Contacto Comercial:</strong> 229-415-8096 / 229-667-6770
+
+  <header>
+    <div class="nav-container">
+      <a href="/" style="text-decoration: none; width: 100%; text-align: center; max-width: 500px;">
+        <img src="ENCABEZADO.jpg" alt="Liten Express Paquetería" class="banner-header">
+      </a>
+      <a href="/" class="btn-login-cajero">← Volver al Cotizador Principal</a>
     </div>
+  </header>
 
-    <h2>Objeto del Documento</h2>
-    <p>El presente documento establece los Términos y Condiciones generales bajo los cuales Liten Express Paquetería (en adelante "El Prestador") ofrece sus servicios logísticos, gestión de envíos, embalaje y servicios de encargo comercial a sus usuarios (en adelante "El Cliente"). Al contratar nuestros servicios y realizar pagos a través de nuestras pasarelas, El Cliente acepta de manera plena y sin reservas estas cláusulas.</p>
+  <main>
+    <div class="container-legal">
+      <h1>Acuerdo de Servicio y Términos Comerciales</h1>
+      
+      <div class="legal-box">
+        <strong style="color: #1e40af;">IDENTIFICACIÓN Y REGISTRO LEGAL DEL NEGOCIO</strong><br><br>
+        Este sitio web y los servicios descritos están respaldados por un establecimiento físico legalmente constituido y autorizado por el H. Ayuntamiento de Veracruz (2026-2029).<br><br>
+        <strong>Titular / Representante Legal:</strong> Jorge Luis Tome Benitez<br>
+        <strong>Nombre Comercial:</strong> Liten Express Paquetería<br>
+        <strong>RFC:</strong> TOBJ860525260<br>
+        <strong>Giro Comercial Autorizado:</strong> Servicios de mensajería y paquetería foránea y local.<br>
+        <strong>Licencia Municipal Folio:</strong> 652-10-26 | <strong>Cédula de Empadronamiento Folio:</strong> 255-10-26<br>
+        <strong>Domicilio Operativo:</strong> Av. Constituyentes 3170, Zona Centro, C.P. 91700 (Entre F. Canal y E. Morales), Veracruz, Ver.<br>
+        <strong>Contacto Comercial:</strong> 229-415-8096 / 229-667-6770
+      </div>
 
-    <h2>Primera - Naturaleza de los Servicios (Qué Vendemos)</h2>
-    <p>El Prestador no vende productos físicos propios en este sitio web. Actuamos como un centro logístico de servicios que comercializa:<br>
-    1. <strong>Gestión de Envíos:</strong> Intermediación comercial entre El Cliente y empresas de mensajería aliadas.<br>
-    2. <strong>Mandado Jarocho:</strong> Servicio de gestoría de compras locales y embalaje bajo las instrucciones de El Cliente.</p>
+      <h2>Objeto del Documento</h2>
+      <p>El presente documento establece los Términos y Condiciones generales bajo los cuales Liten Express Paquetería (en adelante "El Prestador") ofrece sus servicios logísticos, gestión de envíos, embalaje y servicios de encargo comercial a sus usuarios (en adelante "El Cliente"). Al contratar nuestros servicios físicamente en sucursal, El Cliente acepta de manera plena y sin reservas estas cláusulas.</p>
 
-    <h2>Segunda - Responsabilidades del Cliente (Remitente)</h2>
-    <p>El Cliente declara bajo protesta de decir verdad que el contenido de los paquetes entregados a Liten Express es de su propiedad o tiene el derecho legal para enviarlo, y que su contenido es totalmente lícito. Es responsable de la exactitud de los datos de origen, destino y valor de la mercancía.</p>
+      <h2>Primera - Naturaleza de los Servicios (Qué Vendemos)</h2>
+      <p>El Prestador no vende productos físicos propios en este sitio web ni cuenta con pasarela de pago en línea. Actuamos como un centro logístico de servicios físicos que comercializa:<br>
+      1. <strong>Gestión de Envíos:</strong> Intermediación comercial física entre El Cliente y empresas de mensajería aliadas.<br>
+      2. <strong>Mandado Jarocho:</strong> Servicio de gestoría de compras locales, verificación visual en mercado y embalaje bajo las instrucciones de El Cliente.</p>
 
-    <h2>Tercera - Artículos Prohibidos y Restricciones</h2>
-    <p>Queda estrictamente prohibido el envío de:</p>
-    <ul>
-      <li>Dinero en efectivo, valores, joyas o metales preciosos.</li>
-      <li>Armas de fuego, municiones o explosivos.</li>
-      <li>Sustancias tóxicas, corrosivas, inflamables o ilegales (narcóticos).</li>
-      <li>Restos humanos o animales vivos.</li>
-      <li>Artículos perecederos sin el tratamiento ni embalaje térmico adecuado.</li>
-    </ul>
+      <h2>Segunda - Responsabilidades del Cliente (Remitente)</h2>
+      <p>El Cliente declara bajo protesta de decir verdad que el contenido de los paquetes entregados físicamente a Liten Express es de su propiedad o tiene el derecho legal para enviarlo, y que su contenido es totalmente lícito. Es responsable de la exactitud de los datos de origen, destino y valor de la mercancía proporcionados en mostrador.</p>
 
-    <h2>Cuarta - Tarifas, Pagos y Dimensiones</h2>
-    <p>El costo de nuestros servicios se calcula con base en el peso físico o volumétrico. Las tarifas cobradas mediante este portal o enlaces de pago cubren estrictamente el servicio logístico prestado. Cargos adicionales por zonas extendidas serán notificados al cliente.</p>
+      <h2>Tercera - Artículos Prohibidos y Restricciones Aduanales</h2>
+      <p>Queda estrictamente prohibido entregar en nuestro mostrador para su envío:</p>
+      <ul>
+        <li>Dinero en efectivo, valores, joyas o metales preciosos.</li>
+        <li>Armas de fuego, municiones o explosivos.</li>
+        <li>Sustancias tóxicas, corrosivas, inflamables o ilegales (narcóticos).</li>
+        <li>Restos humanos o animales vivos.</li>
+        <li>Artículos perecederos prohibidos por las normativas de la FDA y USDA (para fletes a EE.UU.) o sin el tratamiento térmico adecuado.</li>
+      </ul>
 
-    <h2>Quinta - Tiempos de Entrega y Rastreo</h2>
-    <p>El Prestador proporcionará un número de rastreo oficial. Los tiempos de tránsito dependen de la logística operativa de la empresa transportista. No somos responsables por demoras derivadas del clima, aduanas o retenes.</p>
+      <h2>Cuarta - Tarifas, Pagos y Dimensiones</h2>
+      <p>El cotizador de este sitio web brinda tarifas <strong>informativas y estimadas</strong>. El costo real del servicio logístico se calcula pesando y midiendo físicamente el paquete en nuestra sucursal. Todo pago se realiza en mostrador. Cargos adicionales por exceso de dimensiones (lados mayores a 115 cm) o destinos catalogados como "Zona Extendida" serán notificados al cliente al momento de la documentación.</p>
 
-    <h2>Sexta - Servicio "Mandado Jarocho"</h2>
-    <p>Para encargos y compras locales, El Cliente pagará por anticipado el costo de la mercancía de terceros y nuestro costo de servicio logístico. Comprobaremos la compra mediante tickets/videollamada y despacharemos la mercancía el mismo día.</p>
+      <h2>Quinta - Tiempos de Entrega y Rastreo</h2>
+      <p>El Prestador proporcionará un número de rastreo oficial en la sucursal. Los tiempos de tránsito dependen única y exclusivamente de la logística operativa de la empresa transportista (DHL, FedEx, Estafeta). No somos responsables por demoras derivadas de condiciones climáticas, aduanas o retenes.</p>
 
-    <h2>Séptima - Política de Cancelaciones y Devoluciones</h2>
-    <p>Debido a la naturaleza de los servicios de intermediación logística, una vez generada la guía de envío en el sistema y/o pagado el servicio en la sucursal o pasarela de pago, no existen cancelaciones ni devoluciones de dinero.</p>
-  </div>
+      <h2>Sexta - Servicio "Mandado Jarocho"</h2>
+      <p>Para encargos y compras locales en Veracruz, El Cliente acordará el pago anticipado del costo de la mercancía de terceros y nuestro costo de servicio logístico. Comprobaremos la compra mediante tickets y videollamadas en vivo para asegurar total transparencia en los precios antes de despachar la mercancía.</p>
+
+      <h2>Séptima - Política de Cancelaciones y Devoluciones</h2>
+      <p>Debido a la naturaleza irreversible de los servicios de intermediación logística, una vez documentado el paquete, cobrado el servicio en mostrador y generada la guía oficial de envío en el sistema, <strong>no existen cancelaciones ni devoluciones de dinero</strong> bajo ninguna circunstancia.</p>
+    </div>
+  </main>
+
+  <footer>
+    <img src="PIE DE PAGINA.jpg" alt="Envíos Nacionales e Internacionales Liten Express" class="banner-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>📍 Sucursal Física y Único Punto de Cobro</h3>
+        <p><strong>Comercio Electrónico Liten (RFC: TOBJ860525260)</strong></p>
+        <p>Constituyentes 3170 (Entre Francisco Canal y E. Morales), Colonia Centro, Veracruz, Ver. C.P. 91700</p>
+        <p>📱 WhatsApp y Atención al Cliente: <strong>+52 229 667 6770</strong></p>
+      </div>
+      <div class="footer-col">
+        <h3>Regulación Oficial y Horarios</h3>
+        <p>Licencia H. Ayuntamiento Veracruz: <strong>Folio 652-10-26</strong></p>
+        <p>Lunes a Viernes: 9:00 AM - 7:00 PM</p>
+        <p>Sábados: 9:00 AM - 2:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>
+        <div style="margin-bottom: 8px;">© 2026 Liten Express Paquetería. Todos los derechos reservados. No contamos con pasarela de pagos en línea.</div>
+        <div class="legal-links">
+          <a href="quienessomos.html">Quiénes Somos</a>
+          <a href="terminos.html">Términos y Condiciones</a>
+          <a href="privacidad.html">Aviso de Privacidad</a>
+        </div>
+      </div>
+      <div style="text-align: right;">
+        Concesiones Operativas Logísticas:<br>
+        DHL: P-POINT20240625HH2 | FEDEX: FD20A558602000 | ESTAFETA: MXES202425AA2566
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>
