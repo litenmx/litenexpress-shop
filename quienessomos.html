@@ -37,10 +37,6 @@
     li { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px; position: relative; padding-left: 20px; }
     li::before { content: '✓'; color: #16a34a; font-weight: bold; position: absolute; left: 0; }
     
-    .legal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 30px; }
-    .doc-img { width: 100%; height: auto; border-radius: 10px; border: 2px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
-    .doc-img:hover { transform: scale(1.02); border-color: var(--primary-light); }
-    
     .info-box { background: #f8fafc; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0; border-left: 6px solid var(--primary); margin-top: 25px; }
     .info-box p { margin: 0 0 8px 0; font-size: 14px; color: #334155; }
     .info-box p:last-child { margin-bottom: 0; }
@@ -59,7 +55,6 @@
     .legal-links a:hover { color: #f8fafc; text-decoration: underline; }
 
     @media (max-width: 768px) {
-      .legal-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 25px; }
       .footer-bottom { flex-direction: column; gap: 15px; text-align: left; }
       .nav-container { flex-direction: column; padding: 8px 0; }
@@ -111,21 +106,6 @@
         <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 15px 0;">
         <p><strong>Licencia Municipal Autorizada:</strong> Folio 652-10-26 (H. Ayuntamiento de Veracruz 2026-2029)</p>
         <p><strong>Cédula de Empadronamiento:</strong> Folio 255-10-26</p>
-      </div>
-
-      <div class="legal-grid">
-        <div>
-          <h3 style="font-size: 14px; color: #64748b; margin-bottom: 10px; text-align: center; font-weight: bold;">Evidencia: Licencia Municipal Oficial</h3>
-          <a href="IMG_20261004_135343692.jpg" target="_blank">
-            <img src="IMG_20261004_135343692.jpg" alt="Licencia Municipal Liten Express" class="doc-img">
-          </a>
-        </div>
-        <div>
-          <h3 style="font-size: 14px; color: #64748b; margin-bottom: 10px; text-align: center; font-weight: bold;">Evidencia: Cédula de Empadronamiento</h3>
-          <a href="IMG_20261004_135356014.jpg" target="_blank">
-            <img src="IMG_20261004_135356014.jpg" alt="Cédula de Empadronamiento Liten Express" class="doc-img">
-          </a>
-        </div>
       </div>
 
       <a href="/" class="btn-central">Cotizar un Envío Ahora</a>
