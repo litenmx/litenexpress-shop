@@ -5,98 +5,112 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Liten Express - Servicios de Logística y Envíos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #1e40af;
       --primary-light: #2563eb;
       --primary-dark: #1e3a8a;
       --accent: #16a34a;
-      --bg: #f8fafc;
+      --bg: #f0f4f8;
       --card-bg: #ffffff;
       --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
+      --text-muted: #475569;
+      --border: #cbd5e1;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
     body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
 
-    header { background: #ffffff; border-bottom: 1px solid var(--border); padding: 10px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    /* NAVEGACIÓN SUPERIOR */
+    header { background: #ffffff; border-bottom: 1px solid var(--border); padding: 12px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
     .nav-container { max-width: 1050px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
-    .banner-header { width: 100%; max-width: 500px; height: auto; object-fit: contain; border-radius: 6px; }
-    .btn-login-cajero { font-size: 12px; font-weight: 600; color: var(--text-muted); text-decoration: none; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); transition: all 0.2s; white-space: nowrap; }
-    .btn-login-cajero:hover { background: #f1f5f9; color: var(--primary); border-color: var(--primary-light); }
+    .banner-header { width: 100%; max-width: 450px; height: auto; object-fit: contain; }
+    .btn-login-cajero { font-size: 13px; font-weight: 600; color: var(--text-muted); text-decoration: none; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); transition: all 0.2s; white-space: nowrap; background: #f8fafc; }
+    .btn-login-cajero:hover { background: #e2e8f0; color: var(--primary-dark); border-color: #94a3b8; }
 
-    main { flex: 1; max-width: 1050px; margin: 0 auto; width: 100%; padding: 30px 16px 60px 16px; }
-    .hero-text { text-align: center; margin-bottom: 28px; }
-    .hero-text h1 { font-size: 28px; font-weight: 800; color: var(--primary-dark); margin-bottom: 8px; }
-    .hero-text p { font-size: 15px; color: var(--text-muted); max-width: 600px; margin: 0 auto 15px auto; }
+    /* SECCIÓN HERO (INFORMACIÓN) */
+    main { flex: 1; max-width: 1050px; margin: 0 auto; width: 100%; padding: 40px 16px 60px 16px; }
+    .hero-text { text-align: center; margin-bottom: 35px; }
+    .hero-text h1 { font-size: 32px; font-weight: 800; color: var(--primary-dark); margin-bottom: 10px; letter-spacing: -0.5px; }
+    .hero-text p { font-size: 16px; color: var(--text-muted); max-width: 650px; margin: 0 auto 20px auto; line-height: 1.5; }
     
-    .servicios-lista { background: #e0e7ff; padding: 15px 20px; border-radius: 8px; display: inline-block; text-align: left; max-width: 650px; border: 1px solid #c7d2fe; }
-    .servicios-lista h2 { font-size: 15px; color: var(--primary-dark); margin-bottom: 8px; }
+    /* CAJA DE SERVICIOS ACTUALIZADA */
+    .servicios-lista { background: #ffffff; padding: 20px 25px; border-radius: 12px; display: inline-block; text-align: left; max-width: 700px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .servicios-lista h2 { font-size: 16px; color: var(--primary-dark); margin-bottom: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
     .servicios-lista ul { list-style: none; padding: 0; margin: 0; }
-    .servicios-lista li { font-size: 13px; color: #334155; margin-bottom: 5px; display: flex; align-items: start; gap: 8px;}
+    .servicios-lista li { font-size: 14px; color: #334155; margin-bottom: 10px; display: flex; align-items: start; gap: 10px; line-height: 1.5; }
 
-    .card-cotizador { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 28px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
-    .grid-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 22px; }
+    /* COTIZADOR MEJORADO */
+    .card-cotizador { background: var(--card-bg); border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); overflow: hidden; border: 1px solid #e2e8f0; }
+    .cotizador-header { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%); color: white; padding: 20px 25px; text-align: center; }
+    .cotizador-header h3 { font-size: 18px; font-weight: 700; margin: 0; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .cotizador-header p { font-size: 13px; margin: 5px 0 0 0; opacity: 0.9; font-weight: 400; }
+    
+    .cotizador-body { padding: 30px; }
+    .grid-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 25px; }
     .full { grid-column: span 2; }
-    .seccion-label { font-size: 13px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    
+    .seccion-label { font-size: 13px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
 
     label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; }
-    input { width: 100%; padding: 11px 13px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: #fff; transition: border-color 0.2s; }
-    input:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
-    input.fijo { background-color: #f1f5f9; color: #64748b; cursor: not-allowed; border-style: dashed; }
+    input { width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; background: #f8fafc; transition: all 0.2s; color: #0f172a; font-weight: 500; }
+    input:focus { outline: none; border-color: var(--primary-light); background: #ffffff; box-shadow: 0 0 0 4px rgba(37,99,235,0.1); }
+    input.fijo { background-color: #e2e8f0; color: #64748b; cursor: not-allowed; border: 1px dashed #cbd5e1; }
 
-    .dimensiones-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .dimensiones-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
 
-    .btn-cotizar { width: 100%; background: var(--primary-light); color: #fff; font-size: 16px; font-weight: 700; border: none; padding: 14px; border-radius: 10px; cursor: pointer; transition: background 0.2s; }
-    .btn-cotizar:hover { background: var(--primary); }
-    .btn-cotizar:disabled { background: #94a3b8; cursor: not-allowed; }
+    .btn-cotizar { width: 100%; background: var(--primary-light); color: #fff; font-size: 16px; font-weight: 700; border: none; padding: 16px; border-radius: 10px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.3); }
+    .btn-cotizar:hover { background: var(--primary); transform: translateY(-1px); box-shadow: 0 6px 8px -1px rgba(37,99,235,0.4); }
+    .btn-cotizar:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
 
-    .estado-cargando { display: none; text-align: center; padding: 35px 20px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; margin-top: 24px; }
-    .spinner { width: 36px; height: 36px; border: 4px solid #bfdbfe; border-top-color: var(--primary-light); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 12px auto; }
+    /* ESTADOS Y RESULTADOS */
+    .estado-cargando { display: none; text-align: center; padding: 40px 20px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; margin-top: 25px; }
+    .spinner { width: 40px; height: 40px; border: 4px solid #bfdbfe; border-top-color: var(--primary-light); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px auto; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .estado-cargando h3 { color: var(--primary-dark); font-size: 16px; margin-bottom: 4px; }
+    .estado-cargando h3 { color: var(--primary-dark); font-size: 16px; margin-bottom: 6px; }
     .estado-cargando p { color: #3b82f6; font-size: 13px; }
 
-    #resultadosPublicos { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .card-servicio-publico { background: #ffffff; border: 2px solid var(--border); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s; position: relative; overflow: hidden; }
-    .card-servicio-publico:hover { border-color: var(--primary-light); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.04); }
-    .card-servicio-publico.destacado { border-color: var(--primary-light); background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 100%); }
-    .tag-servicio { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 8px; border-radius: 4px; background: #e0e7ff; color: var(--primary-dark); margin-bottom: 12px; }
+    #resultadosPublicos { margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card-servicio-publico { background: #ffffff; border: 2px solid #e2e8f0; border-radius: 14px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s; position: relative; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .card-servicio-publico:hover { border-color: var(--primary-light); transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+    .card-servicio-publico.destacado { border-color: var(--primary-light); background: linear-gradient(180deg, #ffffff 0%, #f4f8ff 100%); }
+    
+    .tag-servicio { display: inline-block; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 5px 10px; border-radius: 6px; background: #e0e7ff; color: var(--primary-dark); margin-bottom: 15px; }
     .tag-aereo { background: #fef3c7; color: #92400e; }
     
-    .servicio-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
-    .servicio-img { width: 85px; height: 85px; border-radius: 10px; object-fit: contain; background: #f8fafc; border: 1px solid var(--border); padding: 4px; }
-    .servicio-titulo { font-size: 18px; font-weight: 800; color: #0f172a; line-height: 1.1; }
-    .servicio-tiempo { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .servicio-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+    .servicio-img { width: 80px; height: 80px; border-radius: 10px; object-fit: contain; background: #ffffff; border: 1px solid #e2e8f0; padding: 5px; }
+    .servicio-titulo { font-size: 18px; font-weight: 800; color: #0f172a; line-height: 1.2; }
+    .servicio-tiempo { font-size: 13px; color: var(--text-muted); margin-top: 6px; font-weight: 500; }
 
-    .precio-publico { font-size: 26px; font-weight: 800; color: var(--accent); margin: 14px 0 6px 0; }
-    .precio-detalle { font-size: 11px; color: var(--text-muted); margin-bottom: 16px; }
+    .precio-publico { font-size: 28px; font-weight: 800; color: var(--accent); margin: 15px 0 8px 0; }
+    .precio-detalle { font-size: 12px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.4; }
 
-    .btn-sucursal { display: block; text-align: center; background: var(--accent); color: white; text-decoration: none; font-weight: 700; font-size: 14px; padding: 11px 16px; border-radius: 8px; transition: background 0.2s; }
-    .btn-sucursal:hover { background: #15803d; }
-    .btn-whatsapp { display: block; text-align: center; background: #25d366; color: white; text-decoration: none; font-weight: 700; font-size: 13px; padding: 9px 14px; border-radius: 8px; margin-top: 8px; }
+    .btn-sucursal { display: block; text-align: center; background: var(--primary-dark); color: white; text-decoration: none; font-weight: 700; font-size: 14px; padding: 12px 16px; border-radius: 8px; transition: background 0.2s; }
+    .btn-sucursal:hover { background: #0f172a; }
+    .btn-whatsapp { display: block; text-align: center; background: #25d366; color: white; text-decoration: none; font-weight: 700; font-size: 13px; padding: 10px 14px; border-radius: 8px; margin-top: 10px; }
     .btn-whatsapp:hover { background: #1eb956; }
 
-    footer { background: #0f172a; color: #f8fafc; padding: 0 20px 20px 20px; margin-top: auto; }
+    /* FOOTER */
+    footer { background: #0f172a; color: #f8fafc; padding: 0 20px 30px 20px; margin-top: auto; }
     .banner-footer { width: 100%; max-width: 1050px; height: auto; display: block; margin: 0 auto; border-radius: 0 0 16px 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-    .footer-grid { max-width: 1050px; margin: 40px auto 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; border-bottom: 1px solid #334155; padding-bottom: 30px; }
-    .footer-col h3 { font-size: 16px; margin-bottom: 12px; color: #60a5fa; }
+    .footer-grid { max-width: 1050px; margin: 40px auto 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 40px; border-bottom: 1px solid #334155; padding-bottom: 30px; }
+    .footer-col h3 { font-size: 16px; margin-bottom: 15px; color: #60a5fa; text-transform: uppercase; letter-spacing: 0.5px; }
     .footer-col p { font-size: 13px; color: #94a3b8; line-height: 1.6; margin-bottom: 8px; }
-    .footer-bottom { max-width: 1050px; margin: 20px auto 0 auto; display: flex; justify-content: space-between; align-items: start; font-size: 11px; color: #64748b; }
-    .legal-links a { color: #94a3b8; text-decoration: none; margin-right: 15px; font-weight: 600; }
+    .footer-bottom { max-width: 1050px; margin: 25px auto 0 auto; display: flex; justify-content: space-between; align-items: start; font-size: 12px; color: #64748b; }
+    .legal-links a { color: #94a3b8; text-decoration: none; margin-right: 15px; font-weight: 600; transition: color 0.2s; }
     .legal-links a:hover { color: #f8fafc; text-decoration: underline; }
 
     @media (max-width: 768px) {
-      .grid-form { grid-template-columns: 1fr; }
-      .dimensiones-grid { grid-template-columns: 1fr 1fr; }
+      .grid-form { grid-template-columns: 1fr; gap: 15px; }
+      .dimensiones-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
       #resultadosPublicos { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 25px; }
       .footer-bottom { flex-direction: column; gap: 15px; text-align: left; }
-      .nav-container { flex-direction: column; padding: 5px 0; }
+      .nav-container { flex-direction: column; padding: 8px 0; }
       .banner-header { max-width: 100%; }
+      .cotizador-body { padding: 20px; }
     }
   </style>
 </head>
@@ -107,86 +121,92 @@
       <a href="/" style="text-decoration: none; width: 100%; text-align: center; max-width: 500px;">
         <img src="ENCABEZADO.jpg" alt="Liten Express Paquetería" class="banner-header">
       </a>
-      <a href="https://liten-express.onrender.com/login" class="btn-login-cajero" target="_blank">🔐 Acceso Empleados / Aliados</a>
+      <a href="https://liten-express.onrender.com/login" class="btn-login-cajero" target="_blank">🔐 Portal de Cajeros</a>
     </div>
   </header>
 
   <main>
     <div class="hero-text">
-      <h1>Portal de Servicios Logísticos</h1>
-      <p>Centro operativo en Veracruz Centro para soluciones de paquetería a toda la República Mexicana.</p>
+      <h1>Portal de Cotización Informativa</h1>
+      <p>Conoce nuestras tarifas estimadas en línea. <strong>Todos los cobros, recepción de paquetes y emisión de guías se realizan exclusivamente de manera física en nuestra sucursal.</strong></p>
       
-      <!-- Esta sección explica a PayPal los SERVICIOS que vendes -->
       <div class="servicios-lista">
-        <h2>Nuestros Servicios Comerciales:</h2>
+        <h2>Servicios disponibles en mostrador:</h2>
         <ul>
-          <li>📦 <strong>Cotización y Gestión de Envíos:</strong> Servicio de embalaje y emisión de guías mediante paqueterías aliadas.</li>
-          <li>🛍️ <strong>Servicio "Mandado Jarocho":</strong> Gestoría de compras locales, verificación por videollamada y empaque logístico.</li>
-          <li>💳 <strong>Cobro de Servicios:</strong> Calcula el costo de tu ruta y paga el servicio logístico directamente.</li>
+          <li>📦 <strong>Gestión de Envíos:</strong> Servicio de recepción, pesaje, embalaje y emisión de guías autorizadas mediante paqueterías aliadas.</li>
+          <li>🛍️ <strong>Mandado Jarocho:</strong> Gestoría de compras locales físicas, verificación por videollamada desde el mercado y posterior empaque logístico.</li>
+          <li>🏢 <strong>Herramienta de Cotización:</strong> Este sitio web es únicamente una herramienta de consulta gratuita para calcular tarifas previo a tu visita.</li>
         </ul>
       </div>
     </div>
 
     <div class="card-cotizador">
-      <form id="formCotizarPublico">
-        <div class="grid-form">
-          <div>
-            <div class="seccion-label">📍 Origen (Nuestra Sucursal)</div>
-            <div style="margin-bottom: 10px;">
-              <label>Código Postal Origen</label>
-              <input type="text" id="cpOrigen" value="91700" readonly class="fijo">
-            </div>
+      <div class="cotizador-header">
+        <h3>🔍 Cotizador de Envíos Nacionales</h3>
+        <p>Calcula el costo del servicio logístico para tu paquete</p>
+      </div>
+      
+      <div class="cotizador-body">
+        <form id="formCotizarPublico">
+          <div class="grid-form">
             <div>
-              <label>Colonia / Ubicación</label>
-              <input type="text" id="coloniaOrigen" value="CENTRO (Veracruz, Ver.)" readonly class="fijo">
+              <div class="seccion-label">🏢 Origen (Nuestra Sucursal)</div>
+              <div style="margin-bottom: 15px;">
+                <label>Código Postal Origen</label>
+                <input type="text" id="cpOrigen" value="91700" readonly class="fijo">
+              </div>
+              <div>
+                <label>Colonia / Ubicación</label>
+                <input type="text" id="coloniaOrigen" value="CENTRO (Veracruz, Ver.)" readonly class="fijo">
+              </div>
+            </div>
+
+            <div>
+              <div class="seccion-label">🎯 Destino del Paquete</div>
+              <div style="margin-bottom: 15px;">
+                <label>Código Postal Destino (5 dígitos)</label>
+                <input type="text" id="cpDestino" required maxlength="5" placeholder="Ej. 22210">
+              </div>
+              <div>
+                <label>Colonia / Población</label>
+                <input type="text" id="coloniaDestino" required placeholder="Ej. Torres del Lago">
+              </div>
+            </div>
+
+            <div class="full">
+              <div class="seccion-label">📦 Dimensiones Físicas y Peso</div>
+              <div class="dimensiones-grid">
+                <div>
+                  <label>Peso (kg)</label>
+                  <input type="number" id="peso" required min="1" value="1">
+                </div>
+                <div>
+                  <label>Largo (cm)</label>
+                  <input type="number" id="largo" required min="1" value="10" placeholder="Cm">
+                </div>
+                <div>
+                  <label>Ancho (cm)</label>
+                  <input type="number" id="ancho" required min="1" value="10" placeholder="Cm">
+                </div>
+                <div>
+                  <label>Alto (cm)</label>
+                  <input type="number" id="alto" required min="1" value="10" placeholder="Cm">
+                </div>
+              </div>
             </div>
           </div>
 
-          <div>
-            <div class="seccion-label">🎯 Destino de tu Paquete</div>
-            <div style="margin-bottom: 10px;">
-              <label>Código Postal Destino (5 dígitos)</label>
-              <input type="text" id="cpDestino" required maxlength="5" placeholder="Ej. 22210">
-            </div>
-            <div>
-              <label>Colonia / Población</label>
-              <input type="text" id="coloniaDestino" required placeholder="Ej. Torres del Lago">
-            </div>
-          </div>
+          <button type="submit" id="btnCotizar" class="btn-cotizar">Calcular Tarifa para Mostrador</button>
+        </form>
 
-          <div class="full">
-            <div class="seccion-label">📦 Dimensiones y Peso</div>
-            <div class="dimensiones-grid">
-              <div>
-                <label>Peso (kg)</label>
-                <input type="number" id="peso" required min="1" value="1">
-              </div>
-              <div>
-                <label>Largo (cm)</label>
-                <input type="number" id="largo" required min="1" value="10">
-              </div>
-              <div>
-                <label>Ancho (cm)</label>
-                <input type="number" id="ancho" required min="1" value="10">
-              </div>
-              <div>
-                <label>Alto (cm)</label>
-                <input type="number" id="alto" required min="1" value="10">
-              </div>
-            </div>
-          </div>
+        <div id="estadoCargando" class="estado-cargando">
+          <div class="spinner"></div>
+          <h3 id="txtCargandoTitulo">Consultando la matriz de tarifas...</h3>
+          <p id="txtCargandoSub">Conectando con la base de datos de servicios logísticos.</p>
         </div>
 
-        <button type="submit" id="btnCotizar" class="btn-cotizar">🔍 Cotizar Servicio Logístico</button>
-      </form>
-
-      <div id="estadoCargando" class="estado-cargando">
-        <div class="spinner"></div>
-        <h3 id="txtCargandoTitulo">Calculando las tarifas de servicio...</h3>
-        <p id="txtCargandoSub">Consultando disponibilidad en tiempo real con nuestra central.</p>
+        <div id="resultadosPublicos"></div>
       </div>
-
-      <div id="resultadosPublicos"></div>
     </div>
   </main>
 
@@ -194,29 +214,29 @@
     <img src="PIE DE PAGINA.jpg" alt="Envíos Nacionales e Internacionales Liten Express" class="banner-footer">
     <div class="footer-grid">
       <div class="footer-col">
-        <h3>📍 Sucursal Física y Operativa</h3>
+        <h3>📍 Sucursal Física y Único Punto de Cobro</h3>
         <p><strong>Comercio Electrónico Liten (RFC: TOBJ860525260)</strong></p>
         <p>Constituyentes 3170 (Entre Francisco Canal y E. Morales), Colonia Centro, Veracruz, Ver. C.P. 91700</p>
-        <p>📱 Atención al Cliente: <strong>+52 229 667 6770</strong></p>
+        <p>📱 WhatsApp y Atención al Cliente: <strong>+52 229 667 6770</strong></p>
       </div>
       <div class="footer-col">
-        <h3>Licencias y Horarios</h3>
-        <p>Autorización Ayuntamiento Veracruz: <strong>Folio 652-10-26</strong></p>
+        <h3>Regulación Oficial y Horarios</h3>
+        <p>Licencia H. Ayuntamiento Veracruz: <strong>Folio 652-10-26</strong></p>
         <p>Lunes a Viernes: 9:00 AM - 7:00 PM</p>
         <p>Sábados: 9:00 AM - 2:00 PM</p>
       </div>
     </div>
     <div class="footer-bottom">
       <div>
-        <div style="margin-bottom: 8px;">© 2026 Liten Express Paquetería. Todos los derechos reservados.</div>
+        <div style="margin-bottom: 8px;">© 2026 Liten Express Paquetería. Todos los derechos reservados. No contamos con pasarela de pagos en línea.</div>
         <div class="legal-links">
           <a href="quienessomos.html">Quiénes Somos</a>
-          <a href="terminos.html">Términos y Condiciones del Servicio</a>
+          <a href="terminos.html">Términos y Condiciones</a>
           <a href="privacidad.html">Aviso de Privacidad</a>
         </div>
       </div>
       <div style="text-align: right;">
-        Concesiones Operativas:<br>
+        Concesiones Operativas Logísticas:<br>
         DHL: P-POINT20240625HH2 | FEDEX: FD20A558602000 | ESTAFETA: MXES202425AA2566
       </div>
     </div>
@@ -293,7 +313,7 @@
         if (estafetaSinRecoleccion.length === 0) {
           boxResultados.innerHTML = `
             <div style="grid-column: span 2; background: #fff3cd; color: #854d0e; padding: 18px; border-radius: 10px; border: 1px solid #ffeeba; text-align: center;">
-              ⚠ No se encontraron servicios directos para el código postal <strong>${cpDest}</strong>. Acude a sucursal para cotizar con rutas alternativas.
+              ⚠ No se encontraron servicios directos para el código postal <strong>${cpDest}</strong>. Acude a nuestra sucursal para revisar opciones alternativas.
             </div>`;
           return;
         }
@@ -321,25 +341,25 @@
 
         if (mejorTerrestre) {
           const totalTerrestre = calcularPrecioMostrador(mejorTerrestre.total);
-          const msgWa = encodeURIComponent(`Hola Liten Express, coticé en su web un servicio logístico Terrestre al C.P. ${cpDest} por $${totalTerrestre} MXN. ¿Qué horarios tienen para llevar mi paquete?`);
+          const msgWa = encodeURIComponent(`Hola Liten Express, utilicé su cotizador en línea y la tarifa Terrestre al C.P. ${cpDest} indica $${totalTerrestre} MXN. ¿A qué hora puedo llevar mi paquete a la sucursal para pagar y enviarlo?`);
           
           htmlTarifas += `
             <div class="card-servicio-publico">
               <div>
-                <span class="tag-servicio">Servicio Logístico Estándar</span>
+                <span class="tag-servicio">Tarifa Estándar de Sucursal</span>
                 <div class="servicio-header">
                   <img src="ORDINARIO.png" class="servicio-img" alt="Liten Terrestre">
                   <div>
                     <div class="servicio-titulo">LITEN TERRESTRE</div>
-                    <div class="servicio-tiempo">⏱ Entrega estimada: ${mejorTerrestre.dias || '3 a 5'} días hábiles</div>
+                    <div class="servicio-tiempo">⏱ Tránsito estimado: ${mejorTerrestre.dias || '3 a 5'} días hábiles</div>
                   </div>
                 </div>
                 <div class="precio-publico">$${totalTerrestre} <span style="font-size:14px; font-weight:normal; color:#64748b;">MXN</span></div>
-                <div class="precio-detalle">Costo total del servicio. Tarifa garantizada en sucursal Centro.</div>
+                <div class="precio-detalle">Tarifa informativa estimada. El pago del servicio y la emisión de la guía se realizan físicamente en mostrador.</div>
               </div>
               <div>
-                <a href="#footer" class="btn-sucursal">📍 Llevar a Sucursal para Enviar</a>
-                <a href="https://wa.me/522296676770?text=${msgWa}" target="_blank" class="btn-whatsapp">💬 Pagar / Consultar por WhatsApp</a>
+                <a href="#footer" class="btn-sucursal">📍 Ver Ubicación para Entregar</a>
+                <a href="https://wa.me/522296676770?text=${msgWa}" target="_blank" class="btn-whatsapp">💬 Consultar Dudas por WhatsApp</a>
               </div>
             </div>
           `;
@@ -347,25 +367,25 @@
 
         if (mejorAereo) {
           const totalAereo = calcularPrecioMostrador(mejorAereo.total);
-          const msgWaAereo = encodeURIComponent(`Hola Liten Express, coticé en su web un servicio logístico Aéreo Express al C.P. ${cpDest} por $${totalAereo} MXN. Quiero pasar a sucursal a enviarlo.`);
+          const msgWaAereo = encodeURIComponent(`Hola Liten Express, utilicé su cotizador en línea y la tarifa Aérea al C.P. ${cpDest} indica $${totalAereo} MXN. ¿A qué hora puedo llevar mi paquete a la sucursal para pagar y enviarlo hoy mismo?`);
 
           htmlTarifas += `
             <div class="card-servicio-publico destacado">
               <div>
-                <span class="tag-servicio tag-aereo">Servicio Logístico Prioritario</span>
+                <span class="tag-servicio tag-aereo">Tarifa Prioritaria de Sucursal</span>
                 <div class="servicio-header">
                   <img src="EXPRESS.png" class="servicio-img" alt="Liten Aéreo">
                   <div>
                     <div class="servicio-titulo">LITEN EXPRESS AÉREO</div>
-                    <div class="servicio-tiempo">⚡ Entrega estimada: 24 a 48 hrs hábiles</div>
+                    <div class="servicio-tiempo">⚡ Tránsito estimado: 24 a 48 hrs hábiles</div>
                   </div>
                 </div>
                 <div class="precio-publico">$${totalAereo} <span style="font-size:14px; font-weight:normal; color:#64748b;">MXN</span></div>
-                <div class="precio-detalle">Costo total del servicio prioritario entregando en sucursal.</div>
+                <div class="precio-detalle">Tarifa informativa estimada. Servicio sujeto a documentación física y pago en la sucursal Centro antes de las 12:00 PM.</div>
               </div>
               <div>
-                <a href="#footer" class="btn-sucursal">📍 Llevar a Sucursal para Enviar</a>
-                <a href="https://wa.me/522296676770?text=${msgWaAereo}" target="_blank" class="btn-whatsapp">💬 Pagar / Consultar por WhatsApp</a>
+                <a href="#footer" class="btn-sucursal">📍 Ver Ubicación para Entregar</a>
+                <a href="https://wa.me/522296676770?text=${msgWaAereo}" target="_blank" class="btn-whatsapp">💬 Consultar Dudas por WhatsApp</a>
               </div>
             </div>
           `;
@@ -378,7 +398,7 @@
         if (err.message === 'TOO_MANY_REQUESTS') {
            boxResultados.innerHTML = `
             <div style="grid-column: span 2; background: #fef9c3; color: #854d0e; padding: 18px; border-radius: 10px; border: 1px solid #fde047; text-align: center; font-weight: 600;">
-              ⏳ Demasiadas consultas de tarifa recientes.<br><span style="font-weight:normal; font-size:13px;">Por favor, espera unos 10 minutos para volver a cotizar o contáctanos por WhatsApp.</span>
+              ⏳ Demasiadas consultas recientes.<br><span style="font-weight:normal; font-size:13px;">Por favor, espera unos 10 minutos para volver a consultar tarifas o contáctanos por WhatsApp.</span>
             </div>`;
         } else {
            boxResultados.innerHTML = `
