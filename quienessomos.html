@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiénes Somos - Liten Express</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-light: #2563eb;
+      --primary-dark: #1e3a8a;
+      --bg: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+    
+    header { background: #ffffff; border-bottom: 1px solid var(--border); padding: 10px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .nav-container { max-width: 1050px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+    .banner-header { width: 100%; max-width: 500px; height: auto; object-fit: contain; border-radius: 6px; }
+    .btn-volver { font-size: 13px; font-weight: 700; color: var(--primary); text-decoration: none; padding: 8px 14px; border-radius: 6px; background: #eff6ff; border: 1px solid #bfdbfe; transition: all 0.2s; white-space: nowrap; }
+    .btn-volver:hover { background: #dbeafe; }
+
+    main { flex: 1; max-width: 900px; margin: 40px auto; width: 100%; padding: 0 20px; }
+    .card-info { background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 35px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); margin-bottom: 30px; }
+    h1 { color: var(--primary-dark); font-size: 26px; margin-bottom: 15px; border-bottom: 2px solid var(--primary-light); padding-bottom: 10px; }
+    h2 { color: var(--primary); font-size: 18px; margin-top: 25px; margin-bottom: 10px; }
+    p { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 15px; }
+    
+    .legal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+    .doc-img { width: 100%; height: auto; border-radius: 8px; border: 2px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
+    .doc-img:hover { transform: scale(1.02); border-color: var(--primary-light); }
+    
+    .info-box { background: #f1f5f9; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); margin-top: 15px; }
+    .info-box p { margin: 0; font-size: 14px; color: #334155; }
+
+    footer { background: #0f172a; color: #f8fafc; padding: 20px; margin-top: auto; text-align: center; font-size: 12px; }
+    
+    @media (max-width: 768px) {
+      .legal-grid { grid-template-columns: 1fr; }
+      .nav-container { flex-direction: column; padding: 5px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="/" style="text-decoration: none; width: 100%; text-align: center; max-width: 500px;">
+        <img src="ENCABEZADO.jpg" alt="Liten Express Paquetería" class="banner-header">
+      </a>
+      <a href="index.html" class="btn-volver">← Volver al Cotizador</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="card-info">
+      <h1>Acerca de Liten Express</h1>
+      <p>Somos un centro logístico y operativo establecido físicamente en el corazón de Veracruz. Nos especializamos en brindar soluciones de paquetería, embalaje y gestoría de envíos tanto a nivel local como nacional.</p>
+      
+      <h2>Nuestra Operativa Física</h2>
+      <p>A diferencia de un negocio exclusivamente digital, Liten Express opera desde una sucursal física donde recibimos, inspeccionamos y embalamos mercancía comercial cumpliendo con los estándares de las paqueterías más grandes del país (DHL, FedEx, Estafeta). Además, ejecutamos nuestro servicio de compras locales ("Mandado Jarocho") directamente desde mercados tradicionales, garantizando transparencia a nuestros clientes mediante videollamadas antes de cada envío.</p>
+      
+      <h2>Respaldo y Legalidad Comercial</h2>
+      <p>Operamos bajo estricto cumplimiento de las normativas comerciales mexicanas. Nuestro establecimiento cuenta con los permisos y licencias vigentes emitidos por las autoridades municipales correspondientes, garantizando un servicio legítimo, seguro y profesional.</p>
+      
+      <div class="info-box">
+        <p><strong>Razón Social / Titular:</strong> Jorge Luis Tome Benitez (RFC: TOBJ860525260)<br>
+        <strong>Nombre Comercial:</strong> Liten Express Paquetería<br>
+        <strong>Domicilio Fiscal y Operativo:</strong> Av. Constituyentes 3170, Zona Centro, C.P. 91700 (Entre F. Canal y E. Morales), Veracruz, Ver.<br>
+        <strong>Licencia Municipal Autorizada:</strong> Folio 652-10-26 (H. Ayuntamiento de Veracruz 2026-2029)<br>
+        <strong>Cédula de Empadronamiento:</strong> Folio 255-10-26</p>
+      </div>
+
+      <div class="legal-grid">
+        <div>
+          <h3 style="font-size: 13px; color: #64748b; margin-bottom: 8px; text-align: center;">Licencia Municipal Oficial</h3>
+          <a href="IMG_20261004_135343692.jpg" target="_blank">
+            <img src="IMG_20261004_135343692.jpg" alt="Licencia Municipal Liten Express" class="doc-img">
+          </a>
+        </div>
+        <div>
+          <h3 style="font-size: 13px; color: #64748b; margin-bottom: 8px; text-align: center;">Cédula de Empadronamiento</h3>
+          <a href="IMG_20261004_135356014.jpg" target="_blank">
+            <img src="IMG_20261004_135356014.jpg" alt="Cédula de Empadronamiento Liten Express" class="doc-img">
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 Liten Express Paquetería (Comercio Electrónico Liten). Todos los derechos reservados.
+  </footer>
+
+</body>
+</html>
