@@ -3,124 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aviso de Privacidad - Liten Express</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="description" content="Aviso de privacidad de Liten Express.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; form-action 'self'; base-uri 'self'; object-src 'none'">
+  <title>Aviso de Privacidad | Liten Express</title>
   <style>
-    :root {
-      --primary: #1e40af;
-      --primary-light: #2563eb;
-      --primary-dark: #1e3a8a;
-      --bg: #f0f4f8;
-      --card-bg: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --border: #cbd5e1;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
-    body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
-    
-    header { background: #ffffff; border-bottom: 1px solid var(--border); padding: 12px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-    .nav-container { max-width: 1050px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
-    .banner-header { width: 100%; max-width: 450px; height: auto; object-fit: contain; }
-    .btn-login-cajero { font-size: 13px; font-weight: 600; color: var(--text-muted); text-decoration: none; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); transition: all 0.2s; white-space: nowrap; background: #f8fafc; }
-    .btn-login-cajero:hover { background: #e2e8f0; color: var(--primary-dark); border-color: #94a3b8; }
-
-    main { flex: 1; max-width: 950px; margin: 40px auto; width: 100%; padding: 0 16px 60px 16px; }
-    .container-legal { background: #ffffff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-    
-    h1 { color: var(--primary-dark); font-size: 28px; text-align: center; border-bottom: 3px solid var(--primary-light); padding-bottom: 15px; margin-bottom: 25px; letter-spacing: -0.5px; }
-    h2 { color: var(--primary); font-size: 18px; margin-top: 30px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 12px; }
-    p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 15px; }
-    ul { margin-bottom: 20px; padding-left: 20px; }
-
-    /* FOOTER */
-    footer { background: #0f172a; color: #f8fafc; padding: 0 20px 30px 20px; margin-top: auto; }
-    .banner-footer { width: 100%; max-width: 1050px; height: auto; display: block; margin: 0 auto; border-radius: 0 0 16px 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-    .footer-grid { max-width: 1050px; margin: 40px auto 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 40px; border-bottom: 1px solid #334155; padding-bottom: 30px; }
-    .footer-col h3 { font-size: 16px; margin-bottom: 15px; color: #60a5fa; text-transform: uppercase; letter-spacing: 0.5px; }
-    .footer-col p { font-size: 13px; color: #94a3b8; line-height: 1.6; margin-bottom: 8px; }
-    .footer-bottom { max-width: 1050px; margin: 25px auto 0 auto; display: flex; justify-content: space-between; align-items: start; font-size: 12px; color: #64748b; }
-    .legal-links a { color: #94a3b8; text-decoration: none; margin-right: 15px; font-weight: 600; transition: color 0.2s; }
-    .legal-links a:hover { color: #f8fafc; text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .footer-grid { grid-template-columns: 1fr; gap: 25px; }
-      .footer-bottom { flex-direction: column; gap: 15px; text-align: left; }
-      .nav-container { flex-direction: column; padding: 8px 0; }
-      .banner-header { max-width: 100%; }
-      .container-legal { padding: 25px; }
-    }
-  </style>
+  :root {
+    --navy:#0f2347; --blue:#1d4ed8; --ink:#10213b; --muted:#5c6b82;
+    --line:#dbe4f0; --page:#f5f8fc; --white:#fff; --green:#0f9d68;
+    --shadow:0 18px 45px rgba(15,35,71,.10);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:inherit}
+  header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{width:min(1080px,calc(100% - 32px));margin:0 auto;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none}
+  .mark{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#1d4ed8,#123a9e);color:#fff;display:grid;place-items:center;font-weight:900;box-shadow:0 10px 20px rgba(29,78,216,.2)}
+  .brand strong{display:block;font-size:16px}.brand span{display:block;font-size:11px;color:var(--muted);font-weight:700}
+  .back{font-size:12px;font-weight:800;text-decoration:none;padding:10px 13px;border:1px solid var(--line);border-radius:11px;color:#42536b;background:#f8fbff}
+  main{width:min(980px,calc(100% - 32px));margin:36px auto 70px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:42px}
+  .eyebrow{display:inline-flex;border-radius:999px;padding:6px 10px;background:#eef4ff;border:1px solid #d4e2ff;color:var(--blue);font-size:10px;font-weight:900;letter-spacing:.6px;text-transform:uppercase}
+  h1{margin:15px 0 10px;font-size:clamp(30px,5vw,44px);line-height:1.05;letter-spacing:-1px;color:var(--navy)}
+  h2{margin:30px 0 10px;color:var(--blue);font-size:19px}
+  p,li{font-size:14px;line-height:1.8;color:var(--muted)}
+  ul{padding-left:20px}
+  .info-box{margin:24px 0 0;padding:18px 20px;background:#f6f9fd;border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:0 14px 14px 0}
+  .grid{display:grid;grid-template-columns:1.25fr .75fr;gap:20px;margin-top:24px}
+  .mini{background:#0d2348;color:#dbe7f6;border-radius:16px;padding:20px}
+  .mini strong{display:block;color:#fff;margin-bottom:5px;font-size:13px}.mini span{font-size:12px;line-height:1.6}
+  footer{background:#0b1830;color:#d3deee;padding:34px 0 24px}
+  .footer-inner{width:min(1080px,calc(100% - 32px));margin:0 auto;display:grid;grid-template-columns:1.4fr .8fr .8fr;gap:25px}
+  footer h3{margin:0 0 10px;color:#fff;font-size:13px}
+  footer p,footer a{margin:0 0 7px;color:#aabbd2;font-size:12px;line-height:1.6;text-decoration:none}
+  .bottom{width:min(1080px,calc(100% - 32px));margin:22px auto 0;padding-top:16px;border-top:1px solid #20324f;color:#7f93ad;font-size:11px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+  @media(max-width:760px){.nav{min-height:64px}.back{display:none}.card{padding:25px}.grid,.footer-inner{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
+<header><div class="nav">
+  <a class="brand" href="/"><span class="mark">L</span><span><strong>Liten Express</strong><span>Paquetería y servicios logísticos</span></span></a>
+  <a class="back" href="/">← Volver al inicio</a>
+</div></header>
+<main>
+  <article class="card">
+    <span class="eyebrow">Privacidad</span>
+    <h1>Aviso de privacidad</h1>
+    <p><strong>Liten Express</strong> es un negocio con atención física en Veracruz, Veracruz. Este sitio está diseñado como herramienta pública de información y cotización.</p>
 
-  <header>
-    <div class="nav-container">
-      <a href="/" style="text-decoration: none; width: 100%; text-align: center; max-width: 500px;">
-        <img src="ENCABEZADO.jpg" alt="Liten Express Paquetería" class="banner-header">
-      </a>
-      <a href="/" class="btn-login-cajero">← Volver al Cotizador Principal</a>
+    <h2>1. Datos que solicita el cotizador</h2>
+    <p>El formulario público solicita código postal de destino, colonia o población y datos físicos del paquete (peso y dimensiones). Estos datos se utilizan únicamente para realizar una estimación del servicio solicitado.</p>
+
+    <h2>2. Datos que no solicita esta página</h2>
+    <ul>
+      <li>No se solicitan contraseñas ni credenciales de acceso.</li>
+      <li>No se solicitan números de tarjetas, CVV, cuentas bancarias ni claves.</li>
+      <li>No se incorpora un portal público de inicio de sesión.</li>
+      <li>No se incorporan herramientas propias de publicidad, analítica o seguimiento en esta versión.</li>
+    </ul>
+
+    <h2>3. Pagos y documentación</h2>
+    <p>La página es informativa. Los pagos, la recepción del paquete y la documentación final se realizan físicamente en la sucursal. La tarifa mostrada en pantalla debe considerarse estimada hasta que el paquete sea pesado, medido y documentado.</p>
+
+    <h2>4. Contacto para privacidad</h2>
+    <p>Para solicitudes relacionadas con privacidad o uso de datos, utiliza el canal comercial de Liten Express: <strong>+52 229 667 6770</strong>.</p>
+
+    <div class="info-box">
+      <strong>Buenas prácticas del sitio</strong>
+      <p style="margin:7px 0 0">Esta versión evita formularios de credenciales y datos bancarios, limita la captura pública a información operativa del envío y mantiene los enlaces administrativos fuera de la interfaz pública.</p>
     </div>
-  </header>
-
-  <main>
-    <div class="container-legal">
-      <h1>Aviso de Privacidad Comercial</h1>
-      
-      <p><strong>Liten Express Paquetería</strong> (Propiedad de Jorge Luis Tome Benitez, RFC: TOBJ860525260, Licencia Municipal 652-10-26), con domicilio físico y operativo en Av. Constituyentes 3170, Zona Centro, C.P. 91700, Veracruz, Ver., es el responsable del uso y protección de sus datos personales.</p>
-      
-      <h2>1. Fines de la información recabada</h2>
-      <p>Los datos personales que recabamos de usted en nuestra sucursal física o a través de medios de contacto (nombre, dirección de origen y destino, teléfono, correo electrónico, identificaciones) los utilizaremos estrictamente para las siguientes finalidades necesarias para el servicio logístico que solicita:</p>
-      <ul>
-        <li>Procesamiento, cotización y generación de guías oficiales de envío nacionales e internacionales.</li>
-        <li>Prestación del servicio de compra y logística local ("Mandado Jarocho").</li>
-        <li>Generación de recibos y facturación de servicios pagados en mostrador.</li>
-        <li>Contacto de soporte telefónico o por WhatsApp para seguimiento de paquetes o atención de incidencias operativas.</li>
-      </ul>
-
-      <h2>2. Transferencia de Datos Logísticos</h2>
-      <p>Sus datos personales de envío (dirección de destino y contacto) son compartidos dentro del país exclusivamente con las empresas transportistas aliadas (DHL, FedEx, Estafeta) con el único propósito de completar la ruta logística y garantizar la entrega exitosa de la mercancía al destinatario final.</p>
-
-      <h2>3. Manejo de Pagos</h2>
-      <p>Este sitio web es exclusivamente de carácter informativo y de cotización. <strong>Liten Express Paquetería no cuenta con pasarela de pagos en línea y no solicita ni almacena información de tarjetas de crédito, débito o cuentas bancarias a través de esta página web.</strong> Todas las transacciones económicas se realizan de forma segura y física en nuestra sucursal.</p>
-
-      <h2>4. Ejercicio de sus Derechos ARCO</h2>
-      <p>Usted tiene derecho a conocer qué datos personales tenemos de usted, así como a solicitar la corrección, cancelación o revocación de los mismos en nuestros expedientes físicos y digitales internos. Para ejercer estos derechos o revocar su consentimiento, comuníquese directamente a nuestra sucursal en horario laboral al número 229-667-6770.</p>
-    </div>
-  </main>
-
-  <footer>
-    <img src="PIE DE PAGINA.jpg" alt="Envíos Nacionales e Internacionales Liten Express" class="banner-footer">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h3>📍 Sucursal Física y Único Punto de Cobro</h3>
-        <p><strong>Comercio Electrónico Liten (RFC: TOBJ860525260)</strong></p>
-        <p>Constituyentes 3170 (Entre Francisco Canal y E. Morales), Colonia Centro, Veracruz, Ver. C.P. 91700</p>
-        <p>📱 WhatsApp y Atención al Cliente: <strong>+52 229 667 6770</strong></p>
-      </div>
-      <div class="footer-col">
-        <h3>Regulación Oficial y Horarios</h3>
-        <p>Licencia H. Ayuntamiento Veracruz: <strong>Folio 652-10-26</strong></p>
-        <p>Lunes a Viernes: 9:00 AM - 7:00 PM</p>
-        <p>Sábados: 9:00 AM - 2:00 PM</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div>
-        <div style="margin-bottom: 8px;">© 2026 Liten Express Paquetería. Todos los derechos reservados. No contamos con pasarela de pagos en línea.</div>
-        <div class="legal-links">
-          <a href="quienessomos.html">Quiénes Somos</a>
-          <a href="terminos.html">Términos y Condiciones</a>
-          <a href="privacidad.html">Aviso de Privacidad</a>
-        </div>
-      </div>
-      <div style="text-align: right;">
-        Red de Operadores Logísticos:<br>
-        DHL | FedEx | Estafeta
-      </div>
-    </div>
-  </footer>
-
+  </article>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div><h3>Liten Express</h3><p>Servicios de paquetería y apoyo logístico con atención física en Veracruz, Veracruz.</p></div>
+    <div><h3>Información</h3><p><a href="quienessomos.html">Quiénes somos</a></p><p><a href="terminos.html">Términos</a></p><p><a href="privacidad.html">Privacidad</a></p></div>
+    <div><h3>Atención</h3><p>+52 229 667 6770</p><p>Pago y documentación en sucursal.</p></div>
+  </div>
+  <div class="bottom"><span>© 2026 Liten Express</span><span>Sitio informativo</span></div>
+</footer>
 </body>
 </html>
