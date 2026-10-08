@@ -452,9 +452,29 @@
       display: flex;
       gap: 20px;
       justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
       color: #7f93ad;
       font-size: 11px;
+    }
+    .footer-meta-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .discreet-link {
+      color: #4a5d79;
+      text-decoration: none;
+      font-size: 10px;
+      opacity: 0.45;
+      transition: opacity 0.2s ease, color 0.2s ease;
+    }
+    .discreet-link:hover,
+    .discreet-link:focus-visible {
+      opacity: 0.85;
+      color: #7f93ad;
+      outline: none;
     }
 
     .message {
@@ -652,7 +672,10 @@
     </div>
     <div class="footer-bottom">
       <span>© 2026 Liten Express. Todos los derechos reservados.</span>
-      <span>Este sitio no integra pasarela de pagos ni portal de acceso administrativo.</span>
+      <div class="footer-meta-right">
+        <span>Este sitio no integra pasarela de pagos ni portal de acceso administrativo.</span>
+        <a href="https://liten-express.onrender.com/login" class="discreet-link" rel="noopener noreferrer" aria-label="Acceso interno">· Sistema</a>
+      </div>
     </div>
   </footer>
 
