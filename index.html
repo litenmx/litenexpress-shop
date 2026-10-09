@@ -917,11 +917,25 @@
       return Number.isFinite(n) && n >= min && n <= max ? n : null;
     }
 
-    function calcularPrecioMostrador(base) {
-      const costo = Number(base);
-      if (!Number.isFinite(costo) || costo < 0 || costo > 1000000) return null;
-      const servicio = costo * 1.25;
-      return (costo + servicio).toFixed(2);
+    function calcularPrecioMostrador(servicioObj) {
+      if (!servicioObj) return null;
+      
+      const base = Number(servicioObj.precio) || 0;
+      if (base <= 0 || base > 1000000) return null;
+
+      // Extraer cargos extras intactos (igual que en el backend)
+      const cargosAplicados = Array.isArray(servicioObj.cargosAplicados) ? servicioObj.cargosAplicados : [];
+      const cargosExtras = cargosAplicados.reduce((sum, cargo) => sum + Math.max(0, Number(cargo?.monto) || 0), 0);
+
+      // Calcular ganancia solo sobre la tarifa base
+      const nombreBase = String(servicioObj.nombreOriginal || servicioObj.nombre || '').toUpperCase();
+      let mult = 1.25;
+      if (nombreBase.includes('DHL')) mult = 0.65;
+
+      const costoServicio = Math.min(base * mult, 1000);
+
+      // Sumar base + servicio Liten + cargos extras reales
+      return (base + costoServicio + cargosExtras).toFixed(2);
     }
 
     async function fetchCotizacionPublica(payload, signal) {
@@ -1091,7 +1105,7 @@
         }
 
         if (bestTerrestre) {
-          const total = calcularPrecioMostrador(bestTerrestre.total);
+          const total = calcularPrecioMostrador(bestTerrestre);
           if (total !== null) {
             results.appendChild(serviceCard({
               featured: false,
@@ -1105,7 +1119,7 @@
         }
 
         if (bestExpress) {
-          const total = calcularPrecioMostrador(bestExpress.total);
+          const total = calcularPrecioMostrador(bestExpress);
           if (total !== null) {
             results.appendChild(serviceCard({
               featured: true,
