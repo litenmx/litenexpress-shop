@@ -553,6 +553,61 @@
       color: var(--green);
       letter-spacing: -0.8px;
     }
+    
+    /* Estilos para desglose de cargos y advertencias (NUEVO) */
+    .card-details-box {
+      margin: 12px 0;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 12px;
+    }
+    .card-details-title {
+      font-weight: 800;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-detail-item {
+      display: flex;
+      justify-content: space-between;
+      color: #475569;
+      margin-bottom: 5px;
+      border-bottom: 1px dashed #cbd5e1;
+      padding-bottom: 5px;
+    }
+    .card-detail-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .card-detail-item strong {
+      color: #0f172a;
+    }
+    .card-warning {
+      color: #9a3412;
+      background: #fff7ed;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #fdba74;
+    }
+    .card-info {
+      color: #0369a1;
+      background: #e0f2fe;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #bae6fd;
+    }
+
     .result-meta {
       margin: 0 0 18px;
       color: var(--muted);
@@ -917,25 +972,32 @@
       return Number.isFinite(n) && n >= min && n <= max ? n : null;
     }
 
+    // NUEVO: Función matemática actualizada que separa los cargos y devuelve todo en un objeto
     function calcularPrecioMostrador(servicioObj) {
       if (!servicioObj) return null;
       
       const base = Number(servicioObj.precio) || 0;
       if (base <= 0 || base > 1000000) return null;
 
-      // Extraer cargos extras intactos (igual que en el backend)
+      // Extraer y aislar los cargos extras
       const cargosAplicados = Array.isArray(servicioObj.cargosAplicados) ? servicioObj.cargosAplicados : [];
-      const cargosExtras = cargosAplicados.reduce((sum, cargo) => sum + Math.max(0, Number(cargo?.monto) || 0), 0);
+      // Filtramos cargos que sean mayores a 0 para el desglose visual
+      const desgloseCargos = cargosAplicados.filter(c => Math.max(0, Number(c?.monto) || 0) > 0);
+      const cargosExtras = desgloseCargos.reduce((sum, cargo) => sum + Number(cargo.monto), 0);
 
-      // Calcular ganancia solo sobre la tarifa base
+      // Calcular ganancia Liten SOLO sobre el precio base de Envia Fácil
       const nombreBase = String(servicioObj.nombreOriginal || servicioObj.nombre || '').toUpperCase();
       let mult = 1.25;
       if (nombreBase.includes('DHL')) mult = 0.65;
 
       const costoServicio = Math.min(base * mult, 1000);
 
-      // Sumar base + servicio Liten + cargos extras reales
-      return (base + costoServicio + cargosExtras).toFixed(2);
+      // Devolver objeto completo para armar la tarjeta visual
+      return {
+        total: (base + costoServicio + cargosExtras).toFixed(2),
+        cargosExtras: cargosExtras.toFixed(2),
+        desgloseCargos: desgloseCargos
+      };
     }
 
     async function fetchCotizacionPublica(payload, signal) {
@@ -960,7 +1022,8 @@
       throw lastError || new Error('Error de conexión');
     }
 
-    function serviceCard({featured, tag, title, time, total, messageText}) {
+    // NUEVO: Armado de tarjeta visual con desglose y avisos
+    function serviceCard({featured, tag, title, time, total, cargosExtras, desgloseCargos, peso, isExpress, messageText}) {
       const card = document.createElement('article');
       card.className = 'result-card' + (featured ? ' featured' : '');
 
@@ -984,9 +1047,51 @@
       priceEl.textContent = '$' + total + ' MXN';
       card.appendChild(priceEl);
 
+      // Construcción del HTML interno de detalles y avisos operativos
+      let detailsHtml = '';
+
+      if (Number(cargosExtras) > 0 && desgloseCargos && desgloseCargos.length > 0) {
+        const listItems = desgloseCargos.map(c => 
+          `<div class="card-detail-item">
+            <span>• ${c.concepto || 'Cargo extra'}</span> 
+            <strong>$${Number(c.monto).toFixed(2)} MXN</strong>
+          </div>`
+        ).join('');
+        
+        detailsHtml += `
+          <div class="card-details-box">
+            <div class="card-details-title">ℹ️ Cargos extras incluidos en tu cotización</div>
+            ${listItems}
+          </div>
+        `;
+      }
+
+      if (peso > 31) {
+        detailsHtml += `
+          <div class="card-warning">
+            ⚠️ <strong>Aviso de peso:</strong> Paquetes mayores a 31 kg pueden generar recargos adicionales al documentar en mostrador o requerir paqueterías especializadas.
+          </div>
+        `;
+      }
+
+      if (isExpress) {
+        detailsHtml += `
+          <div class="card-info">
+            ⏱️ <strong>Aviso de horario:</strong> Las entregas "Día Siguiente" aplican depositando tu paquete antes de las 12:00 PM (Lunes a Jueves).
+          </div>
+        `;
+      }
+
+      // Inyectar el bloque de detalles de la tarjeta
+      if (detailsHtml) {
+        const detailsContainer = document.createElement('div');
+        detailsContainer.innerHTML = detailsHtml;
+        card.appendChild(detailsContainer);
+      }
+
       const meta = document.createElement('p');
       meta.className = 'result-meta';
-      meta.textContent = 'Tarifa informativa. El monto final se confirma con el paquete físicamente en sucursal.';
+      meta.textContent = 'Tarifa informativa de referencia. El monto final se confirma con el paquete físicamente en sucursal.';
       card.appendChild(meta);
 
       const actions = document.createElement('div');
@@ -1104,30 +1209,40 @@
           );
         }
 
+        // NUEVO: Generar tarjeta terrestre pasando peso y extra cargos
         if (bestTerrestre) {
-          const total = calcularPrecioMostrador(bestTerrestre);
-          if (total !== null) {
+          const precioObj = calcularPrecioMostrador(bestTerrestre);
+          if (precioObj !== null) {
             results.appendChild(serviceCard({
               featured: false,
               tag: 'Servicio estándar',
               title: 'Servicio terrestre',
               time: String(bestTerrestre.dias || '3 a 5 días hábiles'),
-              total,
-              messageText: 'Hola Liten Express, quiero consultar la tarifa estimada para el código postal ' + cpDestino + '.'
+              total: precioObj.total,
+              cargosExtras: precioObj.cargosExtras,
+              desgloseCargos: precioObj.desgloseCargos,
+              peso: peso,
+              isExpress: false,
+              messageText: 'Hola Liten Express, quiero consultar la tarifa terrestre estimada para el C.P. ' + cpDestino + ' por $' + precioObj.total + ' MXN.'
             }));
           }
         }
 
+        // NUEVO: Generar tarjeta exprés pasando peso, tipo de envío y extra cargos
         if (bestExpress) {
-          const total = calcularPrecioMostrador(bestExpress);
-          if (total !== null) {
+          const precioObj = calcularPrecioMostrador(bestExpress);
+          if (precioObj !== null) {
             results.appendChild(serviceCard({
               featured: true,
               tag: 'Servicio prioritario',
               title: 'Servicio exprés',
               time: '24 a 48 horas hábiles',
-              total,
-              messageText: 'Hola Liten Express, quiero consultar la opción exprés para el código postal ' + cpDestino + '.'
+              total: precioObj.total,
+              cargosExtras: precioObj.cargosExtras,
+              desgloseCargos: precioObj.desgloseCargos,
+              peso: peso,
+              isExpress: true,
+              messageText: 'Hola Liten Express, quiero consultar la opción exprés para el código postal ' + cpDestino + ' por $' + precioObj.total + ' MXN.'
             }));
           }
         }
